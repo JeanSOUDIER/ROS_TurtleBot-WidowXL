@@ -1,38 +1,42 @@
-clear
+%clear
 
-MAP_MAX_LENGTH = 3500;
-ROBOT_LENGTH = 32;
-DIST_MIN = 5;
+%rosshutdown;
+%ipTurtlebot = '192.168.1.34';
+%tbot = turtlebot(ipTurtlebot);
+%tbot.Velocity.TopicName = '/cmd_vel';
 
-x = 100
-y = 120
+%resetOdometry(tbot);
+%pos = getOdometry(tbot);
+%Dist = pos.Position*1000;
+%Dist(3) = 10000*pos.Orientation(1);
 
-%loop
-Dot = [100 120 500;100 200 -300];
+function PathFinding(X, Y, tbot)
+    MAP_MAX_LENGTH = 3500;
+    ROBOT_LENGTH = 320;
 
-Mat = zeros(MAP_MAX_LENGTH,MAP_MAX_LENGTH);
+    PosToGo = [X Y 0];
+    
+    Mat = AddLidarPoints(MAP_MAX_LENGTH, ROBOT_LENGTH, tbot);
 
-DotSize = size(Dot);
-for j=1:DotSize(2)
-    Mat(Dot(1,j)-ROBOT_LENGTH/2+MAP_MAX_LENGTH/2:Dot(1,j)+ROBOT_LENGTH/2+MAP_MAX_LENGTH/2,Dot(2,j)-ROBOT_LENGTH/2+MAP_MAX_LENGTH/2:Dot(2,j)+ROBOT_LENGTH/2+MAP_MAX_LENGTH/2) = ones(ROBOT_LENGTH+1,ROBOT_LENGTH+1);
+    map = robotics.BinaryOccupancyGrid(Mat);
+    mapInflated = copy(map);
+    prm = robotics.PRM
+    prm.NumNodes = 2000;
+    prm.ConnectionDistance = 200;
+    prm.Map = mapInflated;
+
+    startLocation = [MAP_MAX_LENGTH/2 MAP_MAX_LENGTH/2];
+    endLocation = [MAP_MAX_LENGTH/2+PosToGo(1) MAP_MAX_LENGTH/2+PosToGo(2)];
+
+    path = findpath(prm, startLocation, endLocation)
+
+    figure(2);
+    show(prm);
+    
+    for i = 2:length(path)
+        PosToGo(3) = PosToGo(3) + Go([path(i,1)-path(i-1,1) path(i,2)-path(i-1,2) PosToGo(3)], tbot);
+    end
+    Go([0 0 PosToGo(3)], tbot);
+    
+    setVelocity(tbot,0);
 end
-
-map = robotics.BinaryOccupancyGrid(Mat);
-
-mapInflated = copy(map);
-
-prm = robotics.PRM;
-
-prm.Map = mapInflated;
-
-%prm.NumNodes = 1;
-
-%prm.ConnectionDistance = 1;
-
-startLocation = [MAP_MAX_LENGTH/2 MAP_MAX_LENGTH/2];
-endLocation = [MAP_MAX_LENGTH/2+x MAP_MAX_LENGTH/2+y];
-
-path = findpath(prm, startLocation, endLocation);
-
-figure(2);
-show(prm);

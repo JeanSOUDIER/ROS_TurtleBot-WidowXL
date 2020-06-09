@@ -1,5 +1,5 @@
 clear
-rosshutdown
+rosshutdown;
 
 %IPs declarations
 ipTurtlebot = '192.168.1.34';
@@ -20,7 +20,9 @@ mypi = raspi(ipTurtlebot,'pi','turtlebot');
 Homing();
 
 %PRGM
-MoveArm(0, 200, 150, 0, false);
+%PosO = GetObject(mypi);
+%PathFinding(PosO(1), PosO(2), tbot);
+%MoveArm(200, 0, 150, 0, true);
 
 
 TakePhoto(mypi,2);
@@ -30,4 +32,4 @@ TakeLidarScan(tbot,3);
 getOdometry(tbot)
 
 %log out Arbotix arm
-rosshutdown
+%rosshutdown;

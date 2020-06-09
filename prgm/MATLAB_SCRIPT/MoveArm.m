@@ -2,9 +2,14 @@ function MoveArm(X, Y, Z, Theta, Grip)
     %Angle
     R = sqrt(X^2+Y^2);
     Gamma = 2*atan(Y/(X+R));
-    MoveMot(1,Gamma/pi);
-    fprintf('R = %d \n',R);
-    fprintf('1 => %d \n',Gamma/pi);
+    GammaNorm = Gamma/pi*3.2+0.9;
+    if(X > 0)
+        MoveMot(1,GammaNorm);
+        fprintf('R = %d \n',R);
+        fprintf('1 => %d \n',Gamma/pi);
+    else
+        fprintf('X negative !!');
+    end
     
     %Kinematic inv
     L1 = 150; %[mm]
@@ -25,9 +30,9 @@ function MoveArm(X, Y, Z, Theta, Grip)
         end
         MoveMot(2, (x(1)-90)/180);
         fprintf('2 => %d \n',(x(1)-90)/180);
-        MoveMot(3, (x(2)-90)/180);
+        %MoveMot(3, (x(2)-90)/180);
         fprintf('3 => %d \n',(x(2)-90)/180);
-        MoveMot(4, (x(3)-90)/180);
+        %MoveMot(4, (x(3)-90)/180);
         fprintf('4 => %d \n',(x(3)-90)/180);
     else
        fprintf('error position \n'); 
@@ -42,10 +47,10 @@ function MoveArm(X, Y, Z, Theta, Grip)
     end
     
     %End arm
-    MoveMot(5, (Theta+90)/90);
+    MoveMot(5, Theta/90);
     fprintf('5 => %d \n',(Theta+90)/90);
     if(Grip == true)
-        %MoveMot(6, -0.8);
+        MoveMot(6, -0.8);
         fprintf('6 => Grip ON \n');
     else
         MoveMot(6, 1);

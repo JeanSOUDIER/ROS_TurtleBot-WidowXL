@@ -1,6 +1,8 @@
-function TakePhoto(mypi,NbPlot)
+function img = TakePhoto(mypi,NbPlot)
     mycam = cameraboard(mypi,'Resolution','1280x720');
     img = snapshot(mycam);
-    figure(NbPlot);
-    imagesc(img);
+    if(NbPlot > 0)
+        figure(NbPlot);
+        imshow(img);
+    end
 end
