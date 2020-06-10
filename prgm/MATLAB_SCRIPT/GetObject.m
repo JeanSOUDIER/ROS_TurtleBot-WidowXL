@@ -1,8 +1,9 @@
-function PosO = GetObject(mypi)
+function PosO = GetObject(sceneImage, mypi)
     boxImage = imread('Pile2.jpg');
     boxImage = rgb2gray(boxImage);
 
-    sceneImage  = TakePhoto(mypi,-1);
+    
+    %sceneImage  = TakePhoto(mypi,-1);
     sceneImage = rgb2gray(sceneImage);
 
     boxPoints = detectSURFFeatures(boxImage);
@@ -39,11 +40,16 @@ function PosO = GetObject(mypi)
     result = result+size(boxImage)/2;
     figure;
     imshow(sceneImage);
-    hold on;
     % Plot cross at row 100, column 50
-    plot(result(1),result(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
-    hold off;
-
-    PosO = [(760+result(2))/cosd(50) result(1)]
+    if(isempty(result))
+        fprintf("not found\n");
+        PosO = [0 0];
+    else
+        hold on;
+        plot(result(1),result(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
+        hold off;
+        PosO = [result(2) result(1)]
+        %https://fr.mathworks.com/help/vision/examples/depth-estimation-from-stereo-video.html
+    end
 end
 

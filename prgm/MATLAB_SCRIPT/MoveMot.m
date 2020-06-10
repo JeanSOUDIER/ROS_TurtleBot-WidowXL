@@ -9,16 +9,23 @@ function MoveMot(nb, pos)
             mot.Data = pos; %mise à jour de la position
             send(robot,mot); %envoi en robot
             test = 1;
-            while(test == 1) %tant qu'on a pas atteint la position à +/-0.02 sur 4 soit +/-0.5%
+            cpt = 0;
+            while(test < 1) %tant qu'on a pas atteint la position à +/-0.02 sur 4 soit +/-0.5%
                 if(sub.LatestMessage.Position(table(nb)) > pos-0.02)
                    if(sub.LatestMessage.Position(table(nb)) < pos+0.02)
                         test = 0;
                    end
                 end
+                cpt = cpt+1;
+                pause(0.001);
+                if(cpt > 5000)
+                    test = -1;
+                    fprintf('error positionning');
+                end
             end
         elseif(nb == 6) %pince
             [robot,mot] = rospublisher('/gripper_controller/gripper_action/goal');
-            mot.Goal.Command.MaxEffort = 0.2;
+            mot.Goal.Command.MaxEffort = 0.15;
             mot.Goal.Command.Position = 0.031;
             send(robot,mot);
             [robot,mot] = rospublisher('/gripper_joint/command');

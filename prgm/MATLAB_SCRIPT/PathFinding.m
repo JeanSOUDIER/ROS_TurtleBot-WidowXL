@@ -15,6 +15,7 @@ function PathFinding(X, Y, tbot)
     ROBOT_LENGTH = 320;
 
     PosToGo = [X Y 0];
+    PosToGo = double(PosToGo);
     
     Mat = AddLidarPoints(MAP_MAX_LENGTH, ROBOT_LENGTH, tbot);
 
@@ -25,8 +26,8 @@ function PathFinding(X, Y, tbot)
     prm.ConnectionDistance = 200;
     prm.Map = mapInflated;
 
-    startLocation = [MAP_MAX_LENGTH/2 MAP_MAX_LENGTH/2];
-    endLocation = [MAP_MAX_LENGTH/2+PosToGo(1) MAP_MAX_LENGTH/2+PosToGo(2)];
+    startLocation = [MAP_MAX_LENGTH/2 MAP_MAX_LENGTH/2]
+    endLocation = [MAP_MAX_LENGTH/2+PosToGo(1) MAP_MAX_LENGTH/2+PosToGo(2)]
 
     path = findpath(prm, startLocation, endLocation)
 

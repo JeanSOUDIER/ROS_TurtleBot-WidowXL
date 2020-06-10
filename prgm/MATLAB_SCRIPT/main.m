@@ -22,7 +22,7 @@ Homing();
 %PRGM
 %PosO = GetObject(mypi);
 %PathFinding(PosO(1), PosO(2), tbot);
-%MoveArm(200, 0, 150, 0, true);
+%MoveArm(100, -300, -250, 0, true);
 
 
 TakePhoto(mypi,2);

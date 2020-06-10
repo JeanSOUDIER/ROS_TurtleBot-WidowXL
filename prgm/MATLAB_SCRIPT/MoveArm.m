@@ -1,12 +1,13 @@
 function MoveArm(X, Y, Z, Theta, Grip)
     %Angle
-    R = sqrt(X^2+Y^2);
-    Gamma = 2*atan(Y/(X+R));
+    [Gamma R] = cart2pol(X,Y);
+    %R = sqrt(X^2+Y^2);
+    %Gamma = 2*atan(Y/(X+R));
     GammaNorm = Gamma/pi*3.2+0.9;
-    if(X > 0)
-        MoveMot(1,GammaNorm);
+    if(X > -1)
         fprintf('R = %d \n',R);
         fprintf('1 => %d \n',Gamma/pi);
+        MoveMot(1,GammaNorm);
     else
         fprintf('X negative !!');
     end

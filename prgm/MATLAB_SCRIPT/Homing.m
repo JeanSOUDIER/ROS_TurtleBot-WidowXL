@@ -1,5 +1,5 @@
 function Homing()
-    fprintf("HOMING !!");
+    fprintf("HOMING !!\n");
     MoveMot(6, 1);
     MoveMot(5, 0.01);
     %4
