@@ -31,7 +31,7 @@ function PathFinding(X, Y, tbot)
 
     path = findpath(prm, startLocation, endLocation)
 
-    figure(2);
+    figure;
     show(prm);
     
     for i = 2:length(path)

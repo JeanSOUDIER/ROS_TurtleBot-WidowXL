@@ -20,9 +20,7 @@ mypi = raspi(ipTurtlebot,'pi','turtlebot');
 Homing();
 
 %PRGM
-%PosO = GetObject(mypi);
-%PathFinding(PosO(1), PosO(2), tbot);
-%MoveArm(100, -300, -250, 0, true);
+GotoObject(tbot, mypi);
 
 
 TakePhoto(mypi,2);
