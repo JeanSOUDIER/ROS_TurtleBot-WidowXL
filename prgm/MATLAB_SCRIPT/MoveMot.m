@@ -25,7 +25,7 @@ function MoveMot(nb, pos)
             end
         elseif(nb == 6) %pince
             [robot,mot] = rospublisher('/gripper_controller/gripper_action/goal');
-            mot.Goal.Command.MaxEffort = 0.15;
+            mot.Goal.Command.MaxEffort = 0.1;
             mot.Goal.Command.Position = 0.031;
             send(robot,mot);
             [robot,mot] = rospublisher('/gripper_joint/command');

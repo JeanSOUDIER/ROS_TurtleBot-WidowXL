@@ -1,0 +1,13 @@
+function ComputeDistCam(L, theta, Po2)
+    Ph = 720;
+    
+    b1 = L*cosd(theta)
+    b2 = sqrt(L^2-b1^2)/tand(30+theta)
+    b3 = sqrt(L^2-b1^2)/tand(60+theta)
+    
+    B = b1+b2
+    H = b1+b3
+    
+    Po = cosd(theta)*(Ph/2-Po2)
+    OB = (H-B)*Po/(
+end

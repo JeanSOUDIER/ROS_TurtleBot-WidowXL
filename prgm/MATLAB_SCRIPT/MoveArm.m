@@ -51,7 +51,7 @@ function MoveArm(X, Y, Z, Theta, Grip)
     MoveMot(5, Theta/90);
     fprintf('5 => %d \n',(Theta+90)/90);
     if(Grip == true)
-        MoveMot(6, -0.8);
+        MoveMot(6, -0.6);
         fprintf('6 => Grip ON \n');
     else
         MoveMot(6, 1);

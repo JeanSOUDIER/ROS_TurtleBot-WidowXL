@@ -5,5 +5,5 @@ function Homing()
     %4
     %3
     MoveMot(2, -0.8);
-    MoveMot(1, 0.9);
+    MoveMot(1, 1.2);
 end

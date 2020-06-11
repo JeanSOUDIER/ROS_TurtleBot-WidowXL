@@ -20,14 +20,15 @@ mypi = raspi(ipTurtlebot,'pi','turtlebot');
 Homing();
 
 %PRGM
-GotoObject(tbot, mypi);
-
-
-TakePhoto(mypi,2);
-
-TakeLidarScan(tbot,3);
-
-getOdometry(tbot)
+%GotoObject(tbot, mypi);
+%{
+Img = TakePhoto(mypi,-1);
+PosO = GetObject(Img);
+PosO = ComputeDistCam(400, 60, PosO);
+PathFinding(PosO(1), PosO(2), tbot);
+pause(1);
+MoveArm(300, 0, -200, 0, true);
+%}
 
 %log out Arbotix arm
 %rosshutdown;

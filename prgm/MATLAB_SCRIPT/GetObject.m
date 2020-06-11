@@ -1,9 +1,7 @@
-function PosO = GetObject(sceneImage, mypi)
+function PosO = GetObject(sceneImage)
     boxImage = imread('Pile2.jpg');
     boxImage = rgb2gray(boxImage);
 
-    
-    %sceneImage  = TakePhoto(mypi,-1);
     sceneImage = rgb2gray(sceneImage);
 
     boxPoints = detectSURFFeatures(boxImage);
