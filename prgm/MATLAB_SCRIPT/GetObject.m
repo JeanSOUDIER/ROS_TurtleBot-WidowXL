@@ -1,4 +1,4 @@
-function PosO = GetObject(sceneImage)
+function [PosO, NbPlot] = GetObject(sceneImage, NbPlot)
     boxImage = imread('Pile2.jpg');
     boxImage = rgb2gray(boxImage);
 
@@ -7,13 +7,14 @@ function PosO = GetObject(sceneImage)
     boxPoints = detectSURFFeatures(boxImage);
     scenePoints = detectSURFFeatures(sceneImage);
 
-    figure;
+    figure (NbPlot);
     imshow(boxImage);
     title('100 Strongest Feature Points from Box Image');
     hold on;
     plot(selectStrongest(boxPoints, 500));
 
-    figure;
+    NbPlot = NbPlot+1;
+    figure (NbPlot);
     imshow(sceneImage);
     title('300 Strongest Feature Points from Scene Image');
     hold on;
@@ -36,7 +37,8 @@ function PosO = GetObject(sceneImage)
         result = mean(result);
     end
     result = result+size(boxImage)/2;
-    figure;
+    NbPlot = NbPlot+1;
+    figure (NbPlot);
     imshow(sceneImage);
     % Plot cross at row 100, column 50
     if(isempty(result))
@@ -46,8 +48,7 @@ function PosO = GetObject(sceneImage)
         hold on;
         plot(result(1),result(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
         hold off;
-        PosO = [result(2) result(1)]
-        %https://fr.mathworks.com/help/vision/examples/depth-estimation-from-stereo-video.html
+        PosO = [result(1) result(2)]
     end
 end
 

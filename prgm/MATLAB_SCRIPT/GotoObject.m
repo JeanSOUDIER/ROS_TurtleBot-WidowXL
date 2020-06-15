@@ -31,6 +31,7 @@ function GotoObject(tbot, mypi)
     if(norm(PosO) == 0)
         PosO = GetObject(ImgL, mypi);
     end
+    PosO = [PosO(2) PosO(1)]; %test
 
     if(norm(PosO) ~= 0)
         Dist = disparityMap(floor(PosO(1)), floor(PosO(2)));
