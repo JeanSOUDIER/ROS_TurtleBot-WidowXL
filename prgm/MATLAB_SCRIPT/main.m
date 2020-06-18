@@ -1,6 +1,6 @@
 clear
 NbPlot = 1;
-rosshutdown;
+%rosshutdown;
 
 %IPs declarations
 ipTurtlebot = '192.168.1.34';
@@ -12,17 +12,33 @@ tbot = turtlebot(ipTurtlebot);
 tbot.Velocity.TopicName = '/cmd_vel';
 
 %Init Arbotix arm
-rosinit(ipArbotix,11311);
+%rosinit(ipArbotix,11311);
 
 %Init camera
 mypi = raspi(ipTurtlebot,'pi','turtlebot');
+SD = serialdev(mypi,'/dev/ttyUSB1',115200);
+pause(10);
+SendArm(SD, 7, [6]);
 
+
+
+
+setVelocity(tbot,1);
+pause(1);
+setVelocity(tbot,0);
+
+pause(1);
+MoveAllMot(SD, [2000 2000 400 400 400 400]);
+
+pause(1);
+TakeLidarScan(tbot,1);
 %home
-Homing();
+%Homing();
 
 %PRGM
 %GotoObject(tbot, mypi);
 
+%{
 Img = TakePhoto(mypi,-1);
 [PosO NbPlot] = GetObject(Img, NbPlot);
 if(norm(PosO) ~= 0)
@@ -33,6 +49,7 @@ if(norm(PosO) ~= 0)
 end
 
 TakePhoto(mypi, NbPlot);
+%}
 
 %log out Arbotix arm
 %rosshutdown;
