@@ -28,10 +28,15 @@ pause(1);
 setVelocity(tbot,0);
 
 pause(1);
-MoveAllMot(SD, [2000 2000 400 400 400 400]);
+MoveAllMot(SD, [1000 1000 400 400 400 400]);
+pause(2);
+MoveAllMot(SD, [2000 2000 600 600 600 600]);
 
 pause(1);
 TakeLidarScan(tbot,1);
+
+pause(1);
+TakePhoto(mypi,2);
 %home
 %Homing();
 
