@@ -6,6 +6,11 @@ function MoveAllMot(SD, Pos)
     ARB_LOOP_SEQ = 11;
 
     Size = 6;
+    
+    Max = [2800 2000 0 0 1000 1000];
+    Min = [750 0 0 0 0 0];
+    
+    Pos = round((Pos+pi).*(Max-Min)/(2*pi)+Min);
 
     SendArm(SD, ARB_LOAD_POSE, CastPos(Pos, 0));
     Time = ones(1,2)*100;
