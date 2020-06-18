@@ -1,6 +1,11 @@
-function TakeLidarScan(tbot,NbPlot)
+function [scanMsg, NbPlot] = TakeLidarScan(tbot,NbPlot)
     [scan,scanMsg] = getLaserScan(tbot);
     scanMsg = AdjustLidarPoints(scanMsg);
-    figure(NbPlot);
-    plot(scanMsg);
+    if(NbPlot > 0)
+        figure(NbPlot);
+        NbPlot = NbPlot+1;
+        plot(scanMsg);
+    else
+        NbPlot = -1;
+    end
 end

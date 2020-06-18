@@ -1,5 +1,4 @@
 function MoveAllMot(SD, Pos)
-    ARB_SIZE_POSE = 7;
     ARB_LOAD_POSE = 8;
     ARB_LOAD_SEQ = 9;
     ARB_PLAY_SEQ = 10;

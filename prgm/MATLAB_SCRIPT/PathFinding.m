@@ -1,4 +1,4 @@
-function PathFinding(X, Y, tbot)
+function NbPlot = PathFinding(X, Y, tbot, NbPlot)
     MAP_MAX_LENGTH = 3500;
     ROBOT_LENGTH = 320;
 
@@ -19,7 +19,8 @@ function PathFinding(X, Y, tbot)
 
     path = findpath(prm, startLocation, endLocation)
 
-    figure;
+    figure(NbPlot);
+    NbPlot = NbPlot+1;
     show(prm);
     
     for i = 2:length(path)

@@ -8,13 +8,14 @@ function [PosO, NbPlot] = GetObject(sceneImage, NbPlot)
     scenePoints = detectSURFFeatures(sceneImage);
 
     figure (NbPlot);
+    NbPlot = NbPlot+1;
     imshow(boxImage);
     title('100 Strongest Feature Points from Box Image');
     hold on;
     plot(selectStrongest(boxPoints, 500));
 
-    NbPlot = NbPlot+1;
     figure (NbPlot);
+    NbPlot = NbPlot+1;
     imshow(sceneImage);
     title('300 Strongest Feature Points from Scene Image');
     hold on;
@@ -28,7 +29,8 @@ function [PosO, NbPlot] = GetObject(sceneImage, NbPlot)
     matchedBoxPoints = boxPoints(boxPairs(:, 1), :);
     matchedScenePoints = scenePoints(boxPairs(:, 2), :);
 
-    %figure;
+    %figure(NbPlot);
+    %NbPlot = NbPlot+1;
     %showMatchedFeatures(boxImage, sceneImage, matchedBoxPoints, matchedScenePoints, 'montage');
     %title('Putatively Matched Points (Including Outliers)');
 
@@ -37,8 +39,8 @@ function [PosO, NbPlot] = GetObject(sceneImage, NbPlot)
         result = mean(result);
     end
     result = result+size(boxImage)/2;
-    NbPlot = NbPlot+1;
     figure (NbPlot);
+    NbPlot = NbPlot+1;
     imshow(sceneImage);
     % Plot cross at row 100, column 50
     if(isempty(result))

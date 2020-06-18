@@ -13,8 +13,8 @@ tbot.Velocity.TopicName = '/cmd_vel';
 mypi = raspi(ipTurtlebot,'pi','turtlebot');
 SD = serialdev(mypi,'/dev/ttyUSB1',115200);
 pause(10);
-%Declare Nb mot on arm
-SendArm(SD, 7, [6]);
+%Declare nb mot on arm
+SetNbMot();
 
 %home
 fprintf('HOMING !!!');
@@ -25,9 +25,24 @@ MoveAllMot(SD, zeros(1,6));
 fprintf('PRGM !!!');
 Img = TakePhoto(mypi,-1);
 [PosO NbPlot] = GetObject(Img, NbPlot);
+if(norm(PosO == 0)
+    pause(1);
+    [PosO NbPlot] = GetObject(Img, NbPlot);
+    if(norm(PosO == 0)
+        setVelocity(tbot,1);
+        pause(0.2);
+        setVelocity(tbot,0);
+        pause(2);
+        [PosO NbPlot] = GetObject(Img, NbPlot);
+        if(norm(PosO == 0)
+            pause(1);
+            [PosO NbPlot] = GetObject(Img, NbPlot);
+        end
+    end
+end
 if(norm(PosO) ~= 0)
     PosO = ComputeDistCam(600, 60, PosO);
-    PathFinding(PosO(1), PosO(2), tbot);
+    NbPlot = PathFinding(PosO(1), PosO(2), tbot, NbPlot);
     pause(1);
     MoveArm(SD, 300, 0, -200, 0, true);
 end
