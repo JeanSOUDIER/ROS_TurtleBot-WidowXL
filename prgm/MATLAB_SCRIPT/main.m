@@ -11,31 +11,48 @@ tbot.Velocity.TopicName = '/cmd_vel';
 
 %Init camera & arm
 mypi = raspi(ipTurtlebot,'pi','turtlebot');
-SD = serialdev(mypi,'/dev/ttyUSB1',115200);
+SD = serialdev(mypi,'/dev/ttyUSB_ARBO',115200);
 pause(10);
 %Declare nb mot on arm
-SetNbMot();
+SetNbMot(SD);
+
+setVelocity(tbot,1);
+pause(1);
+setVelocity(tbot,0);
 
 %home
-fprintf('HOMING !!!');
+fprintf('HOMING !!!\n');
 MoveAllMot(SD, zeros(1,6));
+pause(5);
+MoveAllMot(SD, ones(1,6)*pi/2);
+pause(5);
+
+
+pause(1);
+[a NbPlot] = TakeLidarScan(tbot,NbPlot);
+
+pause(1);
+TakePhoto(mypi, NbPlot);
 
 %PRGM
 %{
-fprintf('PRGM !!!');
+fprintf('PRGM !!!\n');
 Img = TakePhoto(mypi,-1);
 [PosO NbPlot] = GetObject(Img, NbPlot);
-if(norm(PosO == 0)
+if(norm(PosO) == 0)
     pause(1);
+    Img = TakePhoto(mypi,-1);
     [PosO NbPlot] = GetObject(Img, NbPlot);
-    if(norm(PosO == 0)
+    if(norm(PosO) == 0)
         setVelocity(tbot,1);
         pause(0.2);
         setVelocity(tbot,0);
         pause(2);
+        Img = TakePhoto(mypi,-1);
         [PosO NbPlot] = GetObject(Img, NbPlot);
-        if(norm(PosO == 0)
+        if(norm(PosO) == 0)
             pause(1);
+            Img = TakePhoto(mypi,-1);
             [PosO NbPlot] = GetObject(Img, NbPlot);
         end
     end

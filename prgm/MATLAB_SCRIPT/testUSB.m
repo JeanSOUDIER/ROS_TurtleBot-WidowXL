@@ -10,9 +10,9 @@ Size = 6;
 
 
 %mypi = raspi;
+ipTurtlebot = '192.168.1.34';
 mypi = raspi(ipTurtlebot,'pi','turtlebot');
-%{
-SD = serialdev(mypi,'/dev/ttyUSB1',115200);
+SD = serialdev(mypi,'/dev/ttyUSB2',115200);
 pause(10);
 
 id = 0;
