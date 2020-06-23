@@ -15,7 +15,7 @@ function MoveArm(SD, X, Y, Z, Theta, Grip)
     end
     
     %Kinematic inv
-    L1 = 150; %[mm]
+    L1 = 155; %[mm]
     L2 = 150;
     L3 = 170;
     
@@ -31,13 +31,11 @@ function MoveArm(SD, X, Y, Z, Theta, Grip)
             x = fsolve(@(x) equation2R(x,L2,L3, E2(1), E2(2)), x0); %compute for 2 axis
             x = [0 x];
         end
-        x(1) = (x(1)-pi)*pi;
+        x = x*pi/180-pi;
         fprintf('2 => %d \n',x(1));
         Pos = [Pos x(1)];
-        x(2) = (x(2)-pi)*pi;
         fprintf('3 => %d \n',x(2));
         Pos = [Pos x(2)];
-        x(3) = (x(3)-pi)*pi;
         fprintf('4 => %d \n',x(3));
         Pos = [Pos x(3)];
     else
@@ -64,5 +62,6 @@ function MoveArm(SD, X, Y, Z, Theta, Grip)
         Pos = [Pos pi];
         fprintf('6 => Grip OFF \n');
     end
+    Pos
     MoveAllMot(SD,Pos);
 end

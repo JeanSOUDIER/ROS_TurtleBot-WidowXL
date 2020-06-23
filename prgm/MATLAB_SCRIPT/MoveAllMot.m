@@ -6,24 +6,52 @@ function MoveAllMot(SD, Pos)
 
     Size = 6;
     
-    Max = [2850 2000 2100 2100 820 1000];
-    Min = [700 0 0 0 200 0];
+    Max = [2850 4100 2100 2100 820 1000];
+    Min = [700 2000 0 0 200 0];
     
-    Pos = mod(Pos+pi,2*pi)
-    
-    if(Pos(6) < -pi/4+pi) %pince
-        Pos(6) = -pi/4+pi;
+    if(Pos(1) < -pi/2)
+        Pos(1) = -pi/2;
     end
-    if(Pos(3) > pi/2+pi) %cables USB
-        Pos(3) = pi/2+pi;
+    if(Pos(1) > pi/2)
+        Pos(1) = pi/2;
+    end
+    if(Pos(2) < -pi/2)
+        Pos(2) = -pi/2;
+    end
+    if(Pos(2) > pi/2)
+        Pos(2) = pi/2;
+    end
+    if(Pos(3) < -pi/2)
+        Pos(3) = -pi/2;
+    end
+    if(Pos(3) > pi/4) %cable USB
+        Pos(3) = pi/4;
+    end
+    if(Pos(4) < -pi/2)
+        Pos(4) = -pi/2;
+    end
+    if(Pos(4) > pi/2)
+        Pos(4) = pi/2;
+    end
+    if(Pos(5) < -pi/2)
+        Pos(5) = -pi/2;
+    end
+    if(Pos(5) > pi/2)
+        Pos(5) = pi/2;
+    end
+    if(Pos(6) < -pi/8+pi/16) %pince
+        Pos(6) = -pi/8+pi/16;
+    end
+    if(Pos(6) > pi/2)
+        Pos(6) = pi/2;
     end
     
-    Pos = round((Pos).*(Max-Min)/(2*pi)+Min)
+    Pos = round((Pos+pi/2).*(Max-Min)/(pi)+Min);
 
     SendArm(SD, ARB_LOAD_POSE, CastPos(Pos, 0));
     Time = ones(1,2)*5000;
     PosL = [0 255];
     SendArm(SD, ARB_LOAD_SEQ, CastTime(Time, PosL));
     SendArm(SD, ARB_PLAY_SEQ, []);
-    pause(0.2);
+    pause(5.2);
 end
