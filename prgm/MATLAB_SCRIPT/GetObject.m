@@ -1,5 +1,6 @@
-function [PosO, NbPlot] = GetObject(sceneImage, NbPlot)
-    boxImage = imread('Pile2.jpg');
+function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
+    ImgName = ImgName+'.jpg';
+    boxImage = imread(ImgName);
     boxImage = rgb2gray(boxImage);
 
     sceneImage = rgb2gray(sceneImage);
@@ -34,23 +35,38 @@ function [PosO, NbPlot] = GetObject(sceneImage, NbPlot)
     %showMatchedFeatures(boxImage, sceneImage, matchedBoxPoints, matchedScenePoints, 'montage');
     %title('Putatively Matched Points (Including Outliers)');
 
-    result = matchedScenePoints.Location-matchedBoxPoints.Location;
+    %result = matchedScenePoints.Location-matchedBoxPoints.Location;
+    PosO = matchedScenePoints.Location
+    %{
     if(length(result(:,1)) > 1)
-        result = mean(result);
+        result = mean(result)
     end
-    result = result+size(boxImage)/2;
+    result = result+size(boxImage)/2
+    %}
     figure (NbPlot);
     NbPlot = NbPlot+1;
     imshow(sceneImage);
     % Plot cross at row 100, column 50
-    if(isempty(result))
+    if(isempty(PosO))
         fprintf("not found\n");
         PosO = [0 0];
     else
         hold on;
-        plot(result(1),result(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
+        plot(PosO(1),PosO(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
         hold off;
-        PosO = [result(1) result(2)]
+        PosO = [640-PosO(1) 720-PosO(2)];
+        if(PosO(2) < 0)
+            PosO(2) = 0;
+        end
+        if(PosO(2) > 720)
+            PosO(2) = 720;
+        end
+        if(PosO(1) < -640)
+            PosO(1) = -640;
+        end
+        if(PosO(1) > 640)
+            PosO(1) = 640;
+        end
     end
 end
 

@@ -1,3 +1,4 @@
+%start
 if exist('NbPlot','var')
     NbPlot = 1;
 else
@@ -8,42 +9,64 @@ end
 %home
 Homing(SD);
 
-
-pause(1);
-[a NbPlot] = TakeLidarScan(tbot,NbPlot);
-
-pause(1);
-TakePhoto(mypi, NbPlot);
-
-%PRGM
-%{
+%program
 fprintf('PRGM !!!\n');
 Img = TakePhoto(mypi,-1);
-[PosO NbPlot] = GetObject(Img, NbPlot);
+[PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
 if(norm(PosO) == 0)
     pause(1);
     Img = TakePhoto(mypi,-1);
-    [PosO NbPlot] = GetObject(Img, NbPlot);
+    [PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
     if(norm(PosO) == 0)
-        setVelocity(tbot,1);
+        setVelocity(tbot,-1);
         pause(0.2);
         setVelocity(tbot,0);
         pause(2);
         Img = TakePhoto(mypi,-1);
-        [PosO NbPlot] = GetObject(Img, NbPlot);
+        [PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
         if(norm(PosO) == 0)
             pause(1);
             Img = TakePhoto(mypi,-1);
-            [PosO NbPlot] = GetObject(Img, NbPlot);
+            [PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
         end
     end
 end
 if(norm(PosO) ~= 0)
-    PosO = ComputeDistCam(600, 60, PosO);
-    NbPlot = PathFinding(PosO(1), PosO(2), tbot, NbPlot);
+    PosArmToMove(SD, false);
+    PosO = ComputeDistCam(626, 53, PosO);
+    %NbPlot = PathFinding(PosO(1), PosO(2), tbot, NbPlot);
+    Go([PosO(1) PosO(2) 0], tbot);
     pause(1);
-    NbPlot = MoveArmAll(SD, 300, 0, -200, 0, true, NbPlot);
+    PosArmToSeeObj(SD);
+    pause(1);
+    %{
+    Img = TakePhoto(mypi,-1);
+    [PosD NbPlot] = GetObject(Img, 'PileD', NbPlot);
+    if(norm(PosD) == 0)
+        pause(1);
+        Img = TakePhoto(mypi,-1);
+        [PosD NbPlot] = GetObject(Img, 'PileD', NbPlot);
+    end
+    PosD
+    %}
+    %NbPlot = MoveArmAll(SD, 225, 0, 0, 0, 0, NbPlot);
+    
+    %{
+    pause(0.5);
+    PosArmToMove(SD, true);
+    pause(0.5);
+    Go([PosO(2) PosO(1) -pi/2], tbot);
+    Go([0 0 pi], tbot);
+    pause(1);
+    %}
+    PosArmToMove(SD, false);
+else
+    setVelocity(tbot,1);
+    pause(0.2);
+    setVelocity(tbot,0);
+    fprintf('Abandon...\n');
 end
 
+pause(2);
+
 TakePhoto(mypi, NbPlot);
-%}

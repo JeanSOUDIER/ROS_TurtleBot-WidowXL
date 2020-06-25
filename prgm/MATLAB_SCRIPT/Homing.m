@@ -1,4 +1,4 @@
 function Homing(SD)
     fprintf('HOMING !!!\n');
-    MoveAllMot(SD, zeros(1,6));
+    MoveAllMot(SD, [0 0 0 0 0 pi/2]);
 end
