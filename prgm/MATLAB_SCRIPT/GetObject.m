@@ -1,5 +1,5 @@
 function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
-    ImgName = ImgName+'.jpg';
+    ImgName = insertAfter(ImgName,length(ImgName),'.jpg');
     boxImage = imread(ImgName);
     boxImage = rgb2gray(boxImage);
 
@@ -36,7 +36,7 @@ function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
     %title('Putatively Matched Points (Including Outliers)');
 
     %result = matchedScenePoints.Location-matchedBoxPoints.Location;
-    PosO = matchedScenePoints.Location
+    PosO = matchedScenePoints.Location(1,:);
     %{
     if(length(result(:,1)) > 1)
         result = mean(result)
@@ -67,6 +67,7 @@ function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
         if(PosO(1) > 640)
             PosO(1) = 640;
         end
+        PosO
     end
 end
 

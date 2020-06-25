@@ -7,8 +7,8 @@ function O = ComputeDistCam(L, theta, Po2)
     ANGLE_CAM = ANGLE_CAM/2*pi/180;
     ANGLE_CAM_H = 62.2;
     ANGLE_CAM_H = ANGLE_CAM_H/2*pi/180;
-    RESOL_X_MOY = 359;
-    RESOL_X_MAX = 719;
+    RESOL_X_MOY = 360;
+    RESOL_X_MAX = 720;
     RESOL_Y_MAX = 640;
 
     Theta = Theta*pi/180;

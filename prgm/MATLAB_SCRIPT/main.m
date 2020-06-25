@@ -39,7 +39,6 @@ if(norm(PosO) ~= 0)
     pause(1);
     PosArmToSeeObj(SD);
     pause(1);
-    %{
     Img = TakePhoto(mypi,-1);
     [PosD NbPlot] = GetObject(Img, 'PileD', NbPlot);
     if(norm(PosD) == 0)
@@ -48,8 +47,13 @@ if(norm(PosO) ~= 0)
         [PosD NbPlot] = GetObject(Img, 'PileD', NbPlot);
     end
     PosD
-    %}
-    %NbPlot = MoveArmAll(SD, 225, 0, 0, 0, 0, NbPlot);
+    if(norm(PosD) ~= 0)
+        PosD = ComputeDistCamArm(PosD, L);
+        NbPlot = MoveArmAll(SD, PosD(1)+175, PosD(2), 0, -PosD(2)*pi/1280, 0,NbPlot);
+    end
+    PosArmToMove(SD, true);
+    pause(0.5);
+    PosArmToMove(SD, false);
     
     %{
     pause(0.5);
