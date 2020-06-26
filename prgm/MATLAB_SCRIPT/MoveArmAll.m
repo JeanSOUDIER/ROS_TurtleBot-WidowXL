@@ -92,6 +92,6 @@ function NbPlot = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
             fprintf('bras dans le robot');
         end
     else
-        fprinf('bras derrière le robot');
+        fprintf('bras derrière le robot');
     end
 end

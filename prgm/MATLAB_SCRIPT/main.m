@@ -11,46 +11,41 @@ Homing(SD);
 
 %program
 fprintf('PRGM !!!\n');
-Img = TakePhoto(mypi,-1);
-[PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
+[PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
 if(norm(PosO) == 0)
     pause(1);
-    Img = TakePhoto(mypi,-1);
-    [PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
+    [PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
     if(norm(PosO) == 0)
         setVelocity(tbot,-0.1);
         pause(1);
         setVelocity(tbot,0);
         pause(2);
-        Img = TakePhoto(mypi,-1);
-        [PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
+        [PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
         if(norm(PosO) == 0)
             pause(1);
-            Img = TakePhoto(mypi,-1);
-            [PosO NbPlot] = GetObject(Img, 'Pile', NbPlot);
+            [PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
         end
     end
 end
 if(norm(PosO) ~= 0)
     PosArmToMove(SD, false);
     PosO = ComputeDistCam(626, 53, PosO);
-    NbPlot = PathFinding(PosO(1)-200, PosO(2), tbot, NbPlot);
+    NbPlot = PathFinding(PosO(1)-150, PosO(2), tbot, NbPlot);
     %Go([PosO(1)-100 PosO(2) 0], tbot);
     pause(1);
     for i = -pi/4-pi/8:pi/8:pi/4+pi/8
         PosArmToSeeObj(i, SD);
         pause(1);
-        Img = TakePhoto(mypi,-1);
-        [PosD NbPlot] = GetObject(Img, 'PileD', NbPlot);
+        ImgNames = ["PileD","PileD1","PileD2","PileD3"];
+        [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
         if(norm(PosD) == 0)
             pause(1);
-            Img = TakePhoto(mypi,-1);
-            [PosD NbPlot] = GetObject(Img, 'PileD', NbPlot);
+            [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
         end
         PosD
         if(norm(PosD) ~= 0)
-            PosD = ComputeDistCamArm(PosD, 350);
-            NbPlot = MoveArmAll(SD, PosD(1)+175, PosD(2), 0, -PosD(2)*pi/1280, 0,NbPlot);
+            PosD = ComputeDistCamArm(PosD, 350, i);
+            NbPlot = MoveArmAll(SD, PosD(1), PosD(2), 0, -PosD(2)*pi/1280, 0,NbPlot);
             break;
         end
     end

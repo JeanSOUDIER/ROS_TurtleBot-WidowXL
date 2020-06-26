@@ -1,5 +1,6 @@
 function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
-    ImgName = insertAfter(ImgName,length(ImgName),'.jpg');
+    ImgName = ImgName+".jpg";
+    ImgName = convertStringsToChars(ImgName);
     boxImage = imread(ImgName);
     boxImage = rgb2gray(boxImage);
 
