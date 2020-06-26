@@ -36,7 +36,6 @@ function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
     %title('Putatively Matched Points (Including Outliers)');
 
     %result = matchedScenePoints.Location-matchedBoxPoints.Location;
-    PosO = matchedScenePoints.Location(1,:);
     %{
     if(length(result(:,1)) > 1)
         result = mean(result)
@@ -47,10 +46,11 @@ function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
     NbPlot = NbPlot+1;
     imshow(sceneImage);
     % Plot cross at row 100, column 50
-    if(isempty(PosO))
+    if(isempty(matchedScenePoints.Location))
         fprintf("not found\n");
         PosO = [0 0];
     else
+        PosO = matchedScenePoints.Location(1,:);
         hold on;
         plot(PosO(1),PosO(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
         hold off;
