@@ -1,10 +1,16 @@
 function [PosO NbPlot] = TryGetObject(mypi, ImgName, NbPlot)
     Img = TakePhoto(mypi,-1);
-    for i = 1:length(ImgName)
-        ImgName(i)
-        [PosO NbPlot] = GetObject(Img, ImgName(i), NbPlot);
+    cpt = 0;
+    ImgN = ImgName+int2str(cpt)+".jpg";
+    ImgN = convertStringsToChars(ImgN);
+    while(isfile(ImgN))
+        ImgN
+        [PosO NbPlot] = GetObject(Img, ImgN, NbPlot);
         if(norm(PosO) ~= 0)
             break;
         end
+        cpt = cpt+1;
+        ImgN = ImgName+int2str(cpt)+".jpg";
+        ImgN = convertStringsToChars(ImgN);
     end
 end

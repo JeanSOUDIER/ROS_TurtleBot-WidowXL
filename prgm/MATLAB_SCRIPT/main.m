@@ -11,19 +11,19 @@ Homing(SD);
 
 %program
 fprintf('PRGM !!!\n');
-[PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
+[PosO NbPlot] = TryGetObject(mypi, "Pile", NbPlot);
 if(norm(PosO) == 0)
     pause(1);
-    [PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
+    [PosO NbPlot] = TryGetObject(mypi, "Pile", NbPlot);
     if(norm(PosO) == 0)
         setVelocity(tbot,-0.1);
         pause(1);
         setVelocity(tbot,0);
         pause(2);
-        [PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
+        [PosO NbPlot] = TryGetObject(mypi, "Pile", NbPlot);
         if(norm(PosO) == 0)
             pause(1);
-            [PosO NbPlot] = TryGetObject(mypi, ["Pile"], NbPlot);
+            [PosO NbPlot] = TryGetObject(mypi, "Pile", NbPlot);
         end
     end
 end
@@ -35,16 +35,15 @@ if(norm(PosO) ~= 0)
     for i = -pi/4-pi/8:pi/8:pi/4+pi/8
         PosArmToSeeObj(i, SD);
         pause(1);
-        ImgNames = ["PileD","PileD1","PileD2","PileD3","PileD4","PileD5"];
-        [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
+        [PosD NbPlot] = TryGetObject(mypi, "PileD", NbPlot);
         %if(norm(PosD) == 0)
         %    pause(0.5);
-        %    [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
+        %    [PosD NbPlot] = TryGetObject(mypi, "PileD", NbPlot);
         %end
         PosD
         if(norm(PosD) ~= 0)
-            PosD = ComputeDistCamArm(PosD, 400, i); %bug
-            [succes NbPlot] = MoveArmAll(SD, PosD(1)-110, PosD(2), 0, PosD(2)*pi/1280, 0,NbPlot);
+            PosD = ComputeDistCamArm(PosD, 390, 95, i); %bug
+            [succes NbPlot] = MoveArmAll(SD, PosD(1), PosD(2), 0, PosD(2)*pi/1280, 0,NbPlot);
             if(succes == true)
                 break;
             end
