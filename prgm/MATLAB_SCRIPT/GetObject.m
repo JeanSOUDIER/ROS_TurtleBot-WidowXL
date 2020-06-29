@@ -9,19 +9,19 @@ function [PosO, NbPlot] = GetObject(sceneImage, ImgName, NbPlot)
     boxPoints = detectSURFFeatures(boxImage);
     scenePoints = detectSURFFeatures(sceneImage);
 
-    figure (NbPlot);
-    NbPlot = NbPlot+1;
-    imshow(boxImage);
-    title('100 Strongest Feature Points from Box Image');
-    hold on;
-    plot(selectStrongest(boxPoints, 500));
+    %figure (NbPlot);
+    %NbPlot = NbPlot+1;
+    %imshow(boxImage);
+    %title('100 Strongest Feature Points from Box Image');
+    %hold on;
+    %plot(selectStrongest(boxPoints, 500));
 
-    figure (NbPlot);
-    NbPlot = NbPlot+1;
-    imshow(sceneImage);
-    title('300 Strongest Feature Points from Scene Image');
-    hold on;
-    plot(selectStrongest(scenePoints, 1000));
+    %figure (NbPlot);
+    %NbPlot = NbPlot+1;
+    %imshow(sceneImage);
+    %title('300 Strongest Feature Points from Scene Image');
+    %hold on;
+    %plot(selectStrongest(scenePoints, 1000));
 
     [boxFeatures, boxPoints] = extractFeatures(boxImage, boxPoints);
     [sceneFeatures, scenePoints] = extractFeatures(sceneImage, scenePoints);

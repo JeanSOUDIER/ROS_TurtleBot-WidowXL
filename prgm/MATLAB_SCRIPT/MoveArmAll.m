@@ -1,4 +1,4 @@
-function NbPlot = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
+function [succes NbPlot] = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
 
     a1 = 155; %mm
     a2 = 150;
@@ -43,23 +43,23 @@ function NbPlot = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
                     Theta = Theta*pi/90;
                     if(Grip == 0)
                         Pos = [Gamma (Theta1+Tau)-pi/2 pi/2+(Theta2-(Theta1+Tau)) Theta3-Theta2 Theta4 pi/2];
-                        MoveAllMot(SD, Pos);
+                        MoveAllMot(SD, Pos, true);
                         Pos(6) = -pi/2;
-                        MoveAllMot(SD, Pos);
+                        MoveAllMot(SD, Pos, true);
                         fprintf('6 => Grip CATCH \n');
                     elseif(Grip == 1)
                         Pos = [Gamma (Theta1+Tau)-pi/2 pi/2+(Theta2-(Theta1+Tau)) Theta3-Theta2 Theta4 -pi/2];
-                        MoveAllMot(SD, Pos);
+                        MoveAllMot(SD, Pos, true);
                         fprintf('6 => Grip ON \n');
                     elseif(Grip == 2)
                         Pos = [Gamma (Theta1+Tau)-pi/2 pi/2+(Theta2-(Theta1+Tau)) Theta3-Theta2 Theta4 -pi/2];
-                        MoveAllMot(SD, Pos);
+                        MoveAllMot(SD, Pos, true);
                         Pos(6) = pi/2;
-                        MoveAllMot(SD, Pos);
+                        MoveAllMot(SD, Pos, true);
                         fprintf('6 => Grip LET \n');
                     else
                         Pos = [Gamma (Theta1+Tau)-pi/2 pi/2+(Theta2-(Theta1+Tau)) Theta3-Theta2 Theta4 pi/2];
-                        MoveAllMot(SD, Pos);
+                        MoveAllMot(SD, Pos, true);
                         fprintf('6 => Grip OFF \n');
                     end
                     if(NbPlot > 0)
@@ -82,16 +82,21 @@ function NbPlot = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
                         line(P3xb,P3yb,a3,Theta3,'r');
                         hold off;
                     end
+                    succes = true;
                 else
-                    fprintf('bras trop court');
+                    fprintf('bras trop court\n');
+                    succes = false;
                 end
             else
-                fprintf('bras dans le sol');
+                fprintf('bras dans le sol\n');
+                succes = false;
             end
         else
-            fprintf('bras dans le robot');
+            fprintf('bras dans le robot\n');
+            succes = false;
         end
     else
-        fprintf('bras derrière le robot');
+        fprintf('bras derrière le robot\n');
+        succes = false;
     end
 end

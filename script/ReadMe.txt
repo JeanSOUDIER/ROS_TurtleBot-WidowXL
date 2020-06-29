@@ -1,1 +1,2 @@
-source ./launch.sh
+sudo chmod a+rwx launch.sh
+./launch.sh

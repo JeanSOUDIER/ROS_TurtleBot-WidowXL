@@ -28,34 +28,33 @@ if(norm(PosO) == 0)
     end
 end
 if(norm(PosO) ~= 0)
-    PosArmToMove(SD, false);
+    PosArmToMove(SD, false, false);
     PosO = ComputeDistCam(626, 53, PosO);
-    NbPlot = PathFinding(PosO(1)-150, PosO(2), tbot, NbPlot);
+    NbPlot = PathFinding(PosO(1)-50, PosO(2), tbot, NbPlot);
     %Go([PosO(1)-100 PosO(2) 0], tbot);
-    pause(1);
     for i = -pi/4-pi/8:pi/8:pi/4+pi/8
         PosArmToSeeObj(i, SD);
         pause(1);
-        ImgNames = ["PileD","PileD1","PileD2","PileD3"];
+        ImgNames = ["PileD","PileD1","PileD2","PileD3","PileD4","PileD5"];
         [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
-        if(norm(PosD) == 0)
-            pause(1);
-            [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
-        end
+        %if(norm(PosD) == 0)
+        %    pause(0.5);
+        %    [PosD NbPlot] = TryGetObject(mypi, ImgNames, NbPlot);
+        %end
         PosD
         if(norm(PosD) ~= 0)
-            PosD = ComputeDistCamArm(PosD, 350, i);
-            NbPlot = MoveArmAll(SD, PosD(1), PosD(2), 0, -PosD(2)*pi/1280, 0,NbPlot);
-            break;
+            PosD = ComputeDistCamArm(PosD, 400, i); %bug
+            [succes NbPlot] = MoveArmAll(SD, PosD(1)-110, PosD(2), 0, PosD(2)*pi/1280, 0,NbPlot);
+            if(succes == true)
+                break;
+            end
         end
     end
-    PosArmToMove(SD, true);
+    PosArmToMove(SD, true, false);
     pause(0.5);
     %Go([PosO(2) PosO(1) -pi/2], tbot);
     %Go([0 0 pi], tbot);
     NbPlot = PathFinding(-PosO(1)+150, -PosO(2), tbot, NbPlot);
-    pause(1);
-    PosArmToMove(SD, false);
 else
     setVelocity(tbot,0.1);
     pause(1);
@@ -63,6 +62,7 @@ else
     fprintf('Abandon...\n');
 end
 
-pause(2);
-
+close all;
+pause(1);
 TakePhoto(mypi, NbPlot);
+PosArmToMove(SD, false, false);

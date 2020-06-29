@@ -1,4 +1,4 @@
-function MoveAllMot(SD, Pos)
+function MoveAllMot(SD, Pos, Delay)
     ARB_LOAD_POSE = 8;
     ARB_LOAD_SEQ = 9;
     ARB_PLAY_SEQ = 10;
@@ -53,5 +53,7 @@ function MoveAllMot(SD, Pos)
     PosL = [0 255];
     SendArm(SD, ARB_LOAD_SEQ, CastTime(Time, PosL));
     SendArm(SD, ARB_PLAY_SEQ, []);
-    pause(5.2);
+    if(Delay == true)
+        pause(5.2);
+    end
 end

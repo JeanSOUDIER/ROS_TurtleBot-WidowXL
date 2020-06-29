@@ -63,5 +63,5 @@ function MoveArm(SD, X, Y, Z, Theta, Grip)
         fprintf('6 => Grip OFF \n');
     end
     Pos
-    MoveAllMot(SD,Pos);
+    MoveAllMot(SD,Pos, true);
 end
