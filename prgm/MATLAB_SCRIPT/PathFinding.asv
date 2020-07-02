@@ -3,23 +3,22 @@ function [P NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS
     PosToGo = double(PosToGo);
     
     prm = robotics.PRM;
-    prm.NumNodes = 1000;
+    prm.NumNodes = 2000;
     prm.ConnectionDistance = 100;
     
     [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, P);
     
     i = 2;
     while(i ~= length(path))
-        j = i+4;
+        j = i+10;
         if(j > length(path))
             j = length(path);
         end
         if(Map(round(path(j,2)),round(path(j,1))) == 0)
             fprintf('discovering');
-            Go([0 0 PosToGo(3)], tbot);
-            PosToGo(3) = 0;
-            [Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, [TAPIS_X-path(i,2) path(i,1) 0]);
-            [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, [path(i,2) path(i,1) 0]);
+            Gam = mod(PosToGo(3),2*pi);
+            [Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, [TAPIS_X-path(i,2) path(i,1) PosToGo(3)]);
+            [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, [path(i,2) path(i,1) PosToGo(3)]);
             i = 2;
         end
         PosToGo(3) = PosToGo(3) + Go([path(i,1)-path(i-1,1) path(i,2)-path(i-1,2) PosToGo(3)], tbot);

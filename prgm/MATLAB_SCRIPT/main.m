@@ -4,13 +4,26 @@ if exist('NbPlot','var')
 else
     clear
     [tbot, SD, mypi, NbPlot] = Start();
+    Homing(SD);
+    PosArmToMove(SD, false, true);
 end
+TAPIS_X = 800;%1600;
+TAPIS_Y = 2000;%2300;
+TAPIS_X0 = TAPIS_X/2;
+TAPIS_Y0 = 500;
+Map = zeros(TAPIS_X,TAPIS_Y);
+P = [TAPIS_X0 TAPIS_Y0 0];
 
 %home
-Homing(SD);
+%Homing(SD);
+%View Map
+[Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
 
 %program
 fprintf('PRGM !!!\n');
+[P NbPlot] = PathFinding([400 2000], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS_X0, TAPIS_Y0, P);
+
+%{
 [PosO NbPlot] = TryGetObject(mypi, "Pile", NbPlot);
 if(norm(PosO) == 0)
     pause(1);
@@ -65,3 +78,4 @@ close all;
 pause(1);
 TakePhoto(mypi, NbPlot);
 PosArmToMove(SD, false, false);
+%}

@@ -2,7 +2,7 @@ function [tbot, SD, mypi, NbPlot] = Start()
     fprintf('Start !!!!\n');
     NbPlot = 1;
     %IPs declarations
-    ipTurtlebot = '192.168.1.34';
+    ipTurtlebot = '192.168.1.33';
 
     %Init camera & arm
     mypi = raspi(ipTurtlebot,'pi','turtlebot');
