@@ -4,26 +4,23 @@ if exist('NbPlot','var')
 else
     clear
     [tbot, SD, mypi, NbPlot] = Start();
-    Homing(SD);
-    PosArmToMove(SD, false, true);
 end
-TAPIS_X = 800;%1600;
-TAPIS_Y = 2000;%2300;
+TAPIS_X = 1500;%800;
+TAPIS_Y = 2200;%2000;
 TAPIS_X0 = TAPIS_X/2;
-TAPIS_Y0 = 500;
+TAPIS_Y0 = 450;
 Map = zeros(TAPIS_X,TAPIS_Y);
 P = [TAPIS_X0 TAPIS_Y0 0];
 
 %home
-%Homing(SD);
+Homing(SD);
 %View Map
 [Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
 
 %program
 fprintf('PRGM !!!\n');
-[P NbPlot] = PathFinding([400 2000], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS_X0, TAPIS_Y0, P);
+%[P NbPlot] = PathFinding([400 2000], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS_X0, TAPIS_Y0, P);
 
-%{
 [PosO NbPlot] = TryGetObject(mypi, "Pile", NbPlot);
 if(norm(PosO) == 0)
     pause(1);
@@ -43,7 +40,9 @@ end
 if(norm(PosO) ~= 0)
     PosArmToMove(SD, false, false);
     PosO = ComputeDistCam(626, 53, PosO);
-    NbPlot = PathFinding(PosO(1)-50, PosO(2), tbot, NbPlot);
+    [PosO(2)+TAPIS_X0 PosO(1)-50+TAPIS_Y0]
+    [P NbPlot] = PathFinding([PosO(2)+TAPIS_X0 PosO(1)-50+TAPIS_Y0], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS_X0, TAPIS_Y0, P);
+    %NbPlot = PathFinding(PosO(1)-50, PosO(2), tbot, NbPlot);
     %Go([PosO(1)-100 PosO(2) 0], tbot);
     for i = -pi/4-pi/8:pi/8:pi/4+pi/8
         PosArmToSeeObj(i, SD);
@@ -66,7 +65,8 @@ if(norm(PosO) ~= 0)
     pause(0.5);
     %Go([PosO(2) PosO(1) -pi/2], tbot);
     %Go([0 0 pi], tbot);
-    NbPlot = PathFinding(-PosO(1)+150, -PosO(2), tbot, NbPlot);
+    %NbPlot = PathFinding(-PosO(1)+150, -PosO(2), tbot, NbPlot);
+    [P NbPlot] = PathFinding([TAPIS_X0 TAPIS_Y0], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS_X0, TAPIS_Y0, P);
 else
     setVelocity(tbot,0.1);
     pause(1);
@@ -78,4 +78,4 @@ close all;
 pause(1);
 TakePhoto(mypi, NbPlot);
 PosArmToMove(SD, false, false);
-%}
+

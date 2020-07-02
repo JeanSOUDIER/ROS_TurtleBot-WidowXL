@@ -3,7 +3,7 @@ function [P NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, TAPIS
     PosToGo = double(PosToGo);
     
     prm = robotics.PRM;
-    prm.NumNodes = 1000;
+    prm.NumNodes = 1500;
     prm.ConnectionDistance = 100;
     
     [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, P);

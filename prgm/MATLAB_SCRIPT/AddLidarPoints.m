@@ -9,12 +9,15 @@ function Map = AddLidarPoints(Map, TAPIS_X, TAPIS_Y, ROBOT_LENGTH, LIDAR_MAX_LEN
     Dot = [1000*Somme.*cosd(Angle)+P(2) -1000*Somme.*sind(Angle)+P(1)];
     Dot = Dot';
     
-    Mean = min(Somme);
-    Mean = Mean*1000
-    A = P(1)-Mean;
-    B = P(1)+Mean;
-    C = P(2)-Mean;
-    D = P(2)+Mean;
+    M1 = 1000*min(Somme(45:135));
+    M2 = 1000*min(Somme(135:225));
+    M3 = 1000*min(Somme(225:315));
+    S = [Somme(1:45);Somme(315:360)]
+    M4 = 1000*min(S);
+    A = P(1)-M1;
+    B = P(1)+M3;
+    C = P(2)-M2;
+    D = P(2)+M4;
     if(A < 1)
         A = 1;
     end
