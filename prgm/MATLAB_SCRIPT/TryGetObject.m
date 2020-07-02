@@ -1,3 +1,6 @@
+%Function to find an object with all picture named ImgName+".jpg"
+% mypi (object raspberry pi)
+
 function [PosO NbPlot] = TryGetObject(mypi, ImgName, NbPlot)
     Img = TakePhoto(mypi,-1);
     cpt = 0;

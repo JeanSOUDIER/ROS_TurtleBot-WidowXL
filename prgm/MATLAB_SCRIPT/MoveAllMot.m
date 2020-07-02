@@ -1,4 +1,10 @@
+%Function to move the arm
+% SD (object of the USB file descriptor
+% Pos [6]
+% Delay (bool)
+
 function MoveAllMot(SD, Pos, Delay)
+    %Define constantes
     ARB_LOAD_POSE = 8;
     ARB_LOAD_SEQ = 9;
     ARB_PLAY_SEQ = 10;
@@ -9,6 +15,7 @@ function MoveAllMot(SD, Pos, Delay)
     Max = [2850 4100 2100 2100 820 1000];
     Min = [700 2000 0 0 200 0];
     
+    %Saturation
     if(Pos(1) < -pi/2)
         Pos(1) = -pi/2;
     end
@@ -48,6 +55,7 @@ function MoveAllMot(SD, Pos, Delay)
     
     Pos = round((Pos+pi/2).*(Max-Min)/(pi)+Min);
 
+    %Send commands
     SendArm(SD, ARB_LOAD_POSE, CastPos(Pos, 0));
     Time = ones(1,2)*5000;
     PosL = [0 255];

@@ -1,3 +1,5 @@
+%Function to cast the position to send to the arm
+
 function PosC = CastPos(Pos, id)
     PosC = [id];
     for i = 1:length(Pos)

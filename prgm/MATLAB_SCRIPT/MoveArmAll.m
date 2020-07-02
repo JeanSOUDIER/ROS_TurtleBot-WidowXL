@@ -1,6 +1,10 @@
-function [succes NbPlot] = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
+%Function to move the arm properly
+% SD (object USB file descriptor
+% Grip = 0(catch), 1(on), 2(let) or (off)
 
-    a1 = 155; %mm
+function [succes NbPlot] = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
+    %Define constantes in mm
+    a1 = 155;
     a2 = 150;
     a3 = 165;
 
@@ -11,15 +15,16 @@ function [succes NbPlot] = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
     Tau = acos(145/a1);
     Z = Z+Lz+1;
 
-    if(X > -1) %devant le robot
+    %Tests to protect the robot
+    if(X > -1) %in front of the robot
         [Gamma R] = cart2pol(X,Y);
-        if(R > Lr) % pas dans le robot
-            if(Z > Lz) %pas dans le sol
-                if(norm(R,Z) < Lim+a3) %pas plus loin que le bras
+        if(R > Lr) %in the robot
+            if(Z > Lz) %in the bottom
+                if(norm(R,Z) < Lim+a3) %arm too short
                     [xout,yout] = circcirc(0,0,Lim,R,Z,a3);
                     [P3y id] = max(yout);
                     P3x = xout(id);
-                    if(P3x > R) %saturation
+                    if(P3x > R) %Saturation
                         P3x = R;
                         P3y = Z+a3;
                     end

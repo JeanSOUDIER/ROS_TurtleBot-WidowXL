@@ -1,3 +1,6 @@
+%Function to get the odometry coordinates
+% tbot (object Turtlebot)
+
 function P = TakeOdom(tbot)
     Pos = getOdometry(tbot);
     Pos.Position(3) = Pos.Orientation(1);

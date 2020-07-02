@@ -1,7 +1,23 @@
+%Function to compute the distance between the camera and the object for the
+% arm
+%                 |\ Camera
+%                 | \
+%                 |  \
+%                 |   \
+%                 |    \
+%              H  |     \  L
+%                 |      \
+%                 |       \
+%                 |___X____\
+%                     Object Pos [X Y] (in pixels)
+%
+% Angle of the arm from the base
+
 function O = ComputeDistCamArm(Pos, L, H, Angle)
     Px = Pos(1);
     Py = Pos(2);
     
+    %Define constantes
     ANGLE_CAM = 48.8;
     ANGLE_CAM = ANGLE_CAM/2*pi/180;
     ANGLE_CAM_H = 62.2;
@@ -17,20 +33,7 @@ function O = ComputeDistCamArm(Pos, L, H, Angle)
     b = L*tan(ANGLE_CAM_H);
     Y = b*Py/RESOL_Y_MAX;
     
-    %{
-    [Gamma R] = cart2pol(X,Y)
-    Gamma = pi/2-Gamma
-    
-    Delta = (-2*R*cos(Gamma))^2-4*(R^2-(L/2)^2)
-    Sol = [(2*R*cos(Gamma)+sqrt(Delta))/2 (2*R*cos(Gamma)-sqrt(Delta))/2]
-    c = max(Sol)
-    
-    Thet = acos((c^2+(L/2)^2-R^2)/(L*c))
-    Angle = Angle+Thet
-    
-    O = [c*cos(Angle) c*sin(Angle)]
-    %}
-    
+    %Add the angle of the arm
     [Gamma R] = cart2pol(Y,X);
     Gamma = Angle+Gamma;
     [Xa Ya] = pol2cart(Gamma,R);

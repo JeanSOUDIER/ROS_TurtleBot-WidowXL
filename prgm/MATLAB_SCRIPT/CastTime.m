@@ -1,3 +1,5 @@
+%Function to cast the time to send to the arm
+
 function TimeC = CastTime(Time, Pos)
     TimeC = [];
     for i = 1:length(Time)

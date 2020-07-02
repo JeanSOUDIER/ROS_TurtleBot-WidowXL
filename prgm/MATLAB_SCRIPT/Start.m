@@ -1,3 +1,8 @@
+%Function to start the robot
+% tbot (object Turtlebot)
+% SD (object USB file descriptor)
+% mypi (object raspberry pi)
+
 function [tbot, SD, mypi, NbPlot] = Start()
     fprintf('Start !!!!\n');
     NbPlot = 1;
@@ -9,8 +14,6 @@ function [tbot, SD, mypi, NbPlot] = Start()
     SD = serialdev(mypi,'/dev/ttyUSB_ARBO',115200);
     %system(mypi,'source ./launch.sh');
     pause(10);
-
-    
 
     %Init Tbot3
     tbot = turtlebot(ipTurtlebot);

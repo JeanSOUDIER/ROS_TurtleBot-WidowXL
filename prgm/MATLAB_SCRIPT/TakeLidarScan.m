@@ -1,3 +1,6 @@
+%Function to get the lidar's points
+% tbot (object Turtlebot)
+
 function [scanMsg, NbPlot] = TakeLidarScan(tbot,NbPlot,LIDAR_MAX_LENGTH)
     [scan,scanMsg] = getLaserScan(tbot);
     scanMsg = AdjustLidarPoints(scanMsg,LIDAR_MAX_LENGTH);
