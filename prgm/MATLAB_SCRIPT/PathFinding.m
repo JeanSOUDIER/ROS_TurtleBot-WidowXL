@@ -3,7 +3,7 @@
 % Map [TAPIS_X,TAPIS_Y]
 % tbot (object Turtlebot)
 
-function [P NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P)
+function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P)
     PosToGo = [XY(1) XY(2) 0];
     PosToGo = double(PosToGo);
     
