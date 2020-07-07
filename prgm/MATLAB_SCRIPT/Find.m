@@ -11,8 +11,11 @@ function [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, P)
     prm.Map = mapInflated;
     
     %Create points of interests
-    startLocation = [P(2) P(1)]
-    endLocation = [PosToGo(2) PosToGo(1)]
+    startLocation = [P(2) P(1)];
+    endLocation = [PosToGo(2) PosToGo(1)];
+    
+    startLocation = double(startLocation)
+    endLocation = double(endLocation)
 
     %Compute path
     path = findpath(prm, startLocation, endLocation)

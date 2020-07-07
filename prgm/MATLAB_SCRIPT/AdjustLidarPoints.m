@@ -7,12 +7,12 @@ function Out = AdjustLidarPoints(scanMsg,LIDAR_MAX_LENGTH)
     DIST_MAX = 0.1;
     %If points are not on the robot and are close to each ones
     if(scanMsg.Ranges(1) > 0.165)
-        if(abs(scanMsg.Ranges(1)-scanMsg.Ranges(2)) < DIST_MAX)
+        if(abs(scanMsg.Ranges(1)-scanMsg.Ranges(2)) < DIST_MAX) | (abs(scanMsg.Ranges(1)-scanMsg.Ranges(length(scanMsg.Ranges)) < DIST_MAX))
             Out(1) = scanMsg.Ranges(1);
         end
     end
     if(scanMsg.Ranges(length(scanMsg.Ranges)) > 0.165)
-        if(abs(scanMsg.Ranges(length(scanMsg.Ranges))-scanMsg.Ranges(length(scanMsg.Ranges)-1)) < DIST_MAX)
+        if(abs(scanMsg.Ranges(length(scanMsg.Ranges))-scanMsg.Ranges(length(scanMsg.Ranges)-1)) < DIST_MAX) | (abs(scanMsg.Ranges(1)-scanMsg.Ranges(length(scanMsg.Ranges))) < DIST_MAX)
             Out(length(scanMsg.Ranges)) = scanMsg.Ranges(length(scanMsg.Ranges));
         end
     end

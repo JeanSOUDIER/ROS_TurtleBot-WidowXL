@@ -82,9 +82,9 @@ function [succes NbPlot] = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
                         circle(0,0,a1,'b');
                         point(P3x,P3y,'g+');
                         point(P2x,P2y,'m+');
-                        [P2xb P2yb] = line(0,0,a1,Theta1,'r');
-                        [P3xb P3yb] = line(P2xb,P2yb,a2,Theta2,'r');
-                        line(P3xb,P3yb,a3,Theta3,'r');
+                        [P2xb P2yb] = linePol(0,0,a1,Theta1,'r');
+                        [P3xb P3yb] = linePol(P2xb,P2yb,a2,Theta2,'r');
+                        linePol(P3xb,P3yb,a3,Theta3,'r');
                         hold off;
                     end
                     succes = true;
