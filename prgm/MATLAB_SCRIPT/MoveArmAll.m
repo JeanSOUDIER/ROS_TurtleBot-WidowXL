@@ -36,17 +36,10 @@ function [succes NbPlot] = MoveArmAll(SD,X,Y,Z,Theta,Grip,NbPlot)
                     Theta2 = pi/2-acos((P3y-P2y)/a2);
                     Theta3 = pi/2-acos((Z-P3y)/a3);
                     Theta4 = Theta;
-                
-                    if(Theta > 90)
-                        Theta = 90;
-                        fprintf('Theta > 90 \n');
-                    end
-                    if(Theta < -90)
-                        Theta = -90;
-                        fprintf('Theta < 90 \n');
-                    end
-                    Theta = Theta*pi/90;
+                    
                     if(Grip == 0)
+                        Pos = [Gamma pi/4 -pi/4 -pi/4-pi/16 Theta4 pi/2];
+                        MoveAllMot(SD, Pos, true);
                         Pos = [Gamma (Theta1+Tau)-pi/2 pi/2+(Theta2-(Theta1+Tau)) Theta3-Theta2 Theta4 pi/2];
                         MoveAllMot(SD, Pos, true);
                         Pos(6) = -pi/2;
