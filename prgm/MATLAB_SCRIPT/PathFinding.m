@@ -3,7 +3,7 @@
 % Map [TAPIS_X,TAPIS_Y]
 % tbot (object Turtlebot)
 
-function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P)
+function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P, MultiSensor)
     PosToGo = [XY(1) XY(2) 0];
     PosToGo = double(PosToGo);
     
@@ -14,6 +14,16 @@ function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P
     
     %Find the way
     [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, P);
+    
+    if(MultiSensor == true)
+        %launch timer
+        t = timer;
+        t.TimerFcn = @takeBreak;
+        t.Period = 1;
+        t.TasksToExecute = 1000; %approx 10 min
+        t.ExecutionMode = 'fixedRate';
+        start(t);
+    end
     
     %Go to
     i = 2;
@@ -36,6 +46,10 @@ function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P
     end
     %Turn to the 0 angle
     Go([0 0 PosToGo(3)], tbot);
+    
+    if(MultiSensor == true)
+        stop(t);
+    end
     
     %Stop
     setVelocity(tbot,0);
