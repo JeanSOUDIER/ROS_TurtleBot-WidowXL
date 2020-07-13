@@ -25,6 +25,7 @@ function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P
         if(Map(round(path(j,2)),round(path(j,1))) == 0) %Area unknown
             fprintf('discovering');
             Go([0 0 PosToGo(3)], tbot);
+            AdjustOrientation(P(3), tbot);
             PosToGo(3) = 0;
             [Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, [TAPIS_X-path(i,2) path(i,1) 0]);
             [path NbPlot] = Find(Map, prm, PosToGo, tbot, NbPlot, [path(i,2) path(i,1) 0]);
@@ -36,8 +37,8 @@ function [P Map NbPlot] = PathFinding(XY, Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P
     end
     %Turn to the 0 angle
     Go([0 0 PosToGo(3)], tbot);
-    
+    AdjustOrientation(P(3), tbot);
     %Stop
     setVelocity(tbot,0);
-    P = [XY(1) XY(2) 0];
+    P = [XY(1) XY(2) P(3)];
 end

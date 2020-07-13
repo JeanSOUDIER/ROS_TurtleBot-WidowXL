@@ -3,7 +3,7 @@
 %rosinit(ipTurtlebot);
 %rate = rosrate(100)
 
-Delay = 1;
+Delay = 2;
 Duration = 100; %s
 TAPIS_X = 1500;
 TAPIS_Y = 2200;
@@ -11,7 +11,7 @@ TAPIS_X0 = TAPIS_X/2;
 TAPIS_Y0 = 450;
 Map = zeros(TAPIS_X,TAPIS_Y);
 P = [TAPIS_X0 TAPIS_Y0 0];
-[Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
+%[Map NbPlot] = DiscoverMap(Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
 
 t = timer;
 t.TimerFcn = @takeBreak;
@@ -31,11 +31,11 @@ IMUdata = receive(subIMU,1);
 Pimu0 = [1000*IMUdata.LinearAcceleration.X 1000*IMUdata.LinearAcceleration.Y IMUdata.LinearAcceleration.Z];
 PimuO0 = [1000*IMUdata.Orientation.X 1000*IMUdata.Orientation.Y IMUdata.Orientation.Z];
 %}
-
-pause(1);
-%Go([100 0 0], tbot);
-[P Map NbPlot] = PathFinding([TAPIS_X0 1200], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
-pause(1);
+pause(2);
+disp("test");
+Go([100 0 0], tbot);
+%[P Map NbPlot] = PathFinding([TAPIS_X0 1200], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
+pause(5);
 
 stop(t);
 
