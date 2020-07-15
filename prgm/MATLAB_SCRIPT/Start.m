@@ -12,7 +12,6 @@ function [tbot, SD, mypi, NbPlot] = Start()
     %Init camera & arm
     mypi = raspi(ipTurtlebot,'pi','turtlebot');
     SD = serialdev(mypi,'/dev/ttyUSB_ARBO',115200);
-    %system(mypi,'source ./launch.sh');
     pause(10);
 
     %Init Tbot3

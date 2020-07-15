@@ -12,7 +12,7 @@ function MoveAllMot(SD, Pos, Delay)
 
     Size = 6;
     
-    Max = [2850 4100 2100 2100 820 1000];
+    Max = [2800 4100 2100 2100 820 1000];
     Min = [700 2000 0 0 200 0];
     
     %Saturation
