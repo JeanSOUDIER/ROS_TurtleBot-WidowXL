@@ -41,7 +41,7 @@ function [Success NbPlot] = AdjustHough(mypi, tbot, NbPlot)
         Angle
         Success = true;
     else
-        fprintf('not found\n');
+        fprintf("pas d'objet\n");
         Success = false;
     end
 end

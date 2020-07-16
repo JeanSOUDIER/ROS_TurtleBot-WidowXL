@@ -1,5 +1,5 @@
-%Function to set the number of motor
-% SD (object USB file descriptor)
+%Fonction pour envoyer le nombre de moteur au bras
+% SD (objet de l'USB, fichier de description)
 
 function SetNbMot(SD)
     ARB_SIZE_POSE = 7;

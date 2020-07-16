@@ -1,24 +1,25 @@
-%Function to start the robot
-% tbot (object Turtlebot)
-% SD (object USB file descriptor)
-% mypi (object raspberry pi)
+%Fonction pour démarrer le robot
+% tbot (objet Turtlebot)
+% SD (objet de l'USB, fichier de description)
+% mypi (objet raspberry pi)
 
 function [tbot, SD, mypi, NbPlot] = Start()
-    fprintf('Start !!!!\n');
+    fprintf('Démarrage !!!!\n');
     NbPlot = 1;
-    %IPs declarations
+    %Déclaration de l'adresse IP
     ipTurtlebot = '192.168.1.33';
 
-    %Init camera & arm
+    %Initialisation de l'objet Raspberry pi (Raspberry pi toolbox) et de
+    %l'USB, fichier de description
     mypi = raspi(ipTurtlebot,'pi','turtlebot');
     SD = serialdev(mypi,'/dev/ttyUSB_ARBO',115200);
-    pause(10);
+    pause(10); %Attente de la connexion USB
 
-    %Init Tbot3
+    %Initialisation du turtlebot (ROS)
     tbot = turtlebot(ipTurtlebot);
-    %Cmd in velocity
+    %Mode de déplacement en vitesse
     tbot.Velocity.TopicName = '/cmd_vel';
 
-    %Declare nb mot on arm
+    %Déclaration du nombre de moteurs sur le bras
     SetNbMot(SD);
 end

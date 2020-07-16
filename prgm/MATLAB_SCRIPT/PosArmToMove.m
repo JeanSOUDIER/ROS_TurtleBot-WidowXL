@@ -1,5 +1,5 @@
-%Function place the arm to move the base
-% SD (object USB file descriptor)
+%Fonction pour placer le bras en position pour déplacer le robot
+% SD (objet de l'USB, fichier de description)
 
 function PosArmToMove(SD, Grip, Delay)
     if(Grip == true)
