@@ -5,7 +5,7 @@ function res = IsGrip(SD)
         test =  ReadAx12(SD);
     end
     out = uint16(test(3))*256+uint16(test(2));
-    if(out < 500)
+    if(out < 300)
         res = true;
     else
         res = false;

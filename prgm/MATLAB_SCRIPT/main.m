@@ -70,12 +70,16 @@ if(norm(PosO) ~= 0) %Si on a trouvé une image
     %On retourne au point de départ avec le programme d'évitement
     [P Map NbPlot] = PathFinding([TAPIS_X0 TAPIS_Y0], Map, tbot, NbPlot, TAPIS_X, TAPIS_Y, P);
     pause(0.5);
-    if(test_suc == true) %Si on a pris un objet
+    [PosE NbPlot] = TryGetObject(mypi, "PileE", NbPlot); %Détection de l'objet forme "PileE[NUM].jpg"
+    if(norm(PosE) == 0)
+        pause(0.5);
+        [PosE NbPlot] = TryGetObject(mypi, "PileE", NbPlot); %Détection de l'objet forme "PileE[NUM].jpg"
+    end
+    PosE
+    if(test_suc == true) && (norm(PosE) ~= 0) %Si on a pris un objet
         [succes NbPlot] = MoveArmAll(SD, 200, 0, 0, 0, 2,NbPlot); %On le pose devant le robot
     end
     close all;
-    pause(1);
-    [a NbPlot] = TakePhoto(mypi, NbPlot); %On prend une dernière photo
     PosArmToMove(SD, false, false); %On ouvre la pince
     clc;
 else
