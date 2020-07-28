@@ -13,3 +13,8 @@ rosinit(ipTurtlebot);
 Homing(SD); %Position de repos
 PosArmToMove(SD, false, false); %Position de déplacement
 clc;
+
+subO = rossubscriber('/odom')
+subOC = rossubscriber('odomCov')
+subK = rossubscriber('/robot_pose_ekf/odom_combined')
+
